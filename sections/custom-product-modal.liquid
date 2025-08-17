@@ -1,0 +1,80 @@
+{% comment %}
+  Custom Product Modal Template
+  Renders product details with variants for modal display
+  Used by: custom-products-grid.js
+{% endcomment %}
+
+<div class="custom-product-modal-content">
+  {%- if product != blank -%}
+    <div class="custom-modal-product">
+      <div class="custom-modal-layout">
+        <div class="custom-modal-image">
+          <img src="{{ product.featured_media | image_url: width: 300 }}" 
+               alt="{{ product.featured_media.alt | escape }}"
+               loading="lazy">
+        </div>
+        
+        <div class="custom-modal-details">
+          <h3 class="custom-modal-title">{{ product.title }}</h3>
+          <div class="custom-modal-price">{{ product.price | money }}</div>
+          
+          {%- if product.description != blank -%}
+            <div class="custom-modal-description">
+              {{ product.description | truncate: 200 }}
+            </div>
+          {%- endif -%}
+          
+          <form action="/cart/add" method="post" enctype="multipart/form-data" class="custom-modal-form">
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            
+            {%- unless product.has_only_default_variant -%}
+              {%- for option in product.options_with_values -%}
+                <div class="custom-modal-option">
+                  <label class="custom-modal-option-label">{{ option.name }}</label>
+                  {%- if option.name == 'Color' -%}
+                    <div class="custom-modal-color-options">
+                      {%- for value in option.values -%}
+                        <label class="custom-modal-color-option">
+                          <input type="radio" name="options[{{ option.name | escape }}]" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %}>
+                          <span class="custom-modal-color-swatch">{{ value }}</span>
+                        </label>
+                      {%- endfor -%}
+                    </div>
+                  {%- else -%}
+                    <div class="custom-modal-select">
+                      <select name="options[{{ option.name | escape }}]" class="custom-modal-select-input">
+                        {%- for value in option.values -%}
+                          <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>
+                            {{ value }}
+                          </option>
+                        {%- endfor -%}
+                      </select>
+                      <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                        <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                      </svg>
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- endfor -%}
+            {%- endunless -%}
+            
+            <button type="submit" class="custom-modal-add-to-cart" {% unless product.available %}disabled{% endunless %}>
+              <span>
+                {%- if product.available -%}
+                  ADD TO CART
+                {%- else -%}
+                  SOLD OUT
+                {%- endif -%}
+              </span>
+              {% render 'icon-arrow-right' %}
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <script type="application/json" data-product-json>
+        {{ product | json }}
+      </script>
+    </div>
+  {%- endif -%}
+</div>

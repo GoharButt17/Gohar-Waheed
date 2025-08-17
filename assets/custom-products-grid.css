@@ -1,0 +1,421 @@
+@font-face {
+    font-family: 'Lustria Regular';
+    src: url('https://cdn.shopify.com/s/files/1/0950/1782/8654/files/Lustria-Regular.ttf?v=1755458158') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Jost Light';
+    src: url('https://cdn.shopify.com/s/files/1/0950/1782/8654/files/Jost-Light.ttf?v=1755461735') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Jost Regular';
+    src: url('https://cdn.shopify.com/s/files/1/0950/1782/8654/files/Jost-Regular.ttf?v=1755443458') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+
+/* Custom Products Grid Layout */
+.custom-products-grid {
+  margin: 0;
+}
+
+.custom-products-grid__title-wrapper {
+  margin-bottom: 3rem;
+  text-align: left;
+}
+
+.custom-products-grid__title {
+  font-family: 'Lustria Regular';
+  font-size: 30px;
+  letter-spacing: normal;
+  line-height: normal;
+  margin: 0;
+}
+
+.custom-products-grid__container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin: 0;
+}
+
+.custom-products-grid__item {
+  position: relative;
+}
+
+.custom-products-grid__card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.custom-products-grid__image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.custom-products-grid__image-btn {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  display: block;
+}
+
+.custom-products-grid__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.custom-products-grid__image-btn:hover .custom-products-grid__image {
+  transform: scale(1.05);
+}
+
+/* Product Modal */
+.custom-product-modal {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 2rem;
+  box-sizing: border-box;
+  margin: 0 !important;
+  transform: none !important;
+}
+
+.custom-product-modal__backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+  z-index: 999;
+}
+
+.custom-product-modal__content {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  z-index: 1001;
+  margin: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.custom-product-modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1002;
+  color: #666;
+}
+
+.custom-product-modal__close:hover {
+  color: #000;
+}
+
+.custom-modal-product {
+  padding: 0;
+  text-align: left;
+}
+
+.custom-modal-layout {
+  display: flex;
+  min-height: auto;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.custom-modal-image {
+  flex: 0 0 150px;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.custom-modal-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.custom-modal-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.custom-modal-title {
+  font-family: 'Jost Light';
+  font-size: 2rem;
+  font-weight: 300;
+  margin: 0 0 0.8rem 0;
+  color: #000;
+  line-height: 1.2;
+}
+
+.custom-modal-price {
+  font-family: 'Lustria Regular';
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-bottom: 0rem;
+  color: #000;
+}
+
+.custom-modal-description {
+  font-family: 'Jost Light';
+  font-size: 1.4rem;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #000;
+  margin-bottom: 1rem;
+}
+
+.custom-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: auto;
+}
+
+.custom-modal-option {
+  text-align: left;
+}
+
+.custom-modal-option-label {
+  display: block;
+  font-family: 'Jost Regular';
+  font-size: 1.4rem;
+  font-weight: 400;
+  margin-bottom: 0.8rem;
+  color: #000;
+}
+
+/* Color Options Styling */
+.custom-modal-color-options {
+  display: flex;
+  gap: 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.custom-modal-color-option {
+  flex: 1;
+  position: relative;
+  cursor: pointer;
+}
+
+.custom-modal-color-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+.custom-modal-color-swatch {
+  display: block;
+  padding: 1rem;
+  text-align: center;
+  font-family: 'Jost Regular';
+  font-size: 1.3rem;
+  background: #f8f8f8;
+  border-right: 1px solid #ddd;
+  transition: all 0.2s ease;
+}
+
+.custom-modal-color-option:last-child .custom-modal-color-swatch {
+  border-right: none;
+}
+
+.custom-modal-color-option input[type="radio"]:checked + .custom-modal-color-swatch {
+  background: #000;
+  color: white;
+}
+
+.custom-modal-color-option:hover .custom-modal-color-swatch {
+  background: #e8e8e8;
+}
+
+.custom-modal-color-option input[type="radio"]:checked + .custom-modal-color-swatch:hover {
+  background: #333;
+}
+
+.custom-modal-select {
+  position: relative;
+}
+
+.custom-modal-select-input {
+  width: 100%;
+  padding: 1rem 3rem 1rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: 'Jost Regular';
+  background: white;
+  appearance: none;
+  cursor: pointer;
+}
+
+.custom-modal-select-input:focus {
+  outline: none;
+  border-color: #000;
+}
+
+.custom-modal-select svg {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #666;
+}
+
+.custom-modal-add-to-cart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.2rem 2.4rem;
+  background: #000;
+  color: white;
+  border: none;
+  border-radius: 0;
+  font-family: 'Jost Regular';
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.custom-modal-add-to-cart:hover:not(:disabled) {
+  background: #333;
+}
+
+.custom-modal-add-to-cart:hover:not(:disabled) svg {
+  transform: translateX(0.3rem);
+}
+
+.custom-modal-add-to-cart:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.custom-modal-add-to-cart svg {
+  width: 2rem;
+  height: 1rem;
+  transition: transform 0.2s ease;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 989px) {
+  .custom-products-grid__container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .custom-products-grid__title-wrapper {
+    margin-bottom: 2rem;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .custom-products-grid__container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .custom-products-grid__title {
+    font-size: 28px;
+    text-align: center;
+  }
+}
+
+/* Modal Responsive */
+@media screen and (max-width: 768px) {
+  .custom-product-modal {
+    padding: 1rem;
+  }
+  
+  .custom-product-modal__content {
+    max-width: 400px;
+  }
+  
+  .custom-modal-layout {
+    flex-direction: column;
+    min-height: auto;
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+  
+  .custom-modal-image {
+    flex: none;
+    width: 120px;
+    height: 120px;
+    align-self: center;
+  }
+  
+  .custom-modal-details {
+    padding: 0;
+  }
+  
+  .custom-modal-title {
+    font-size: 1.6rem;
+  }
+  
+  .custom-modal-price {
+    font-size: 1.4rem;
+  }
+  
+  .custom-modal-color-options {
+    flex-direction: column;
+  }
+  
+  .custom-modal-color-swatch {
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .custom-modal-color-option:last-child .custom-modal-color-swatch {
+    border-bottom: none;
+  }
+}

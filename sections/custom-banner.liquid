@@ -1,0 +1,337 @@
+{% comment %}
+  Custom Banner Section
+  Flexible banner with header, images, and text blocks
+{% endcomment %}
+
+{{ 'custom-banner.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .custom-banner {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<!-- Custom Banner Container -->
+<div class="custom-banner color-{{ section.settings.color_scheme }}">
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      
+      {%- when 'header' -%}
+        <!-- Header Block -->
+        <div class="custom-banner__header" {{ block.shopify_attributes }}>
+          <!-- Desktop Header -->
+          <div class="custom-banner__header-desktop desktop-only" style="background-color: {{ block.settings.background_color }};">
+            <div class="custom-banner__header-left">
+              {%- if block.settings.logo != blank -%}
+                <img src="{{ block.settings.logo | image_url: width: 200 }}" alt="{{ block.settings.logo.alt | default: 'Logo' }}" class="custom-banner__logo">
+              {%- else -%}
+                <span class="custom-banner__logo-text">{{ block.settings.logo_text | default: 'LOGO' }}</span>
+              {%- endif -%}
+            </div>
+            
+            <div class="custom-banner__header-center">
+              {%- if block.settings.tagline != blank -%}
+                <p class="custom-banner__tagline">{{ block.settings.tagline }}</p>
+              {%- endif -%}
+            </div>
+            
+            <div class="custom-banner__header-right">
+              {%- if block.settings.button_link != blank and block.settings.button_text != blank -%}
+                <a href="{{ block.settings.button_link }}" class="button custom-banner__header-button" style="background-color: {{ block.settings.button_bg_color }}; color: {{ block.settings.button_text_color }};">
+                  <span>{{ block.settings.button_text }}</span>
+                  {% render 'icon-arrow-right' %}
+                </a>
+              {%- endif -%}
+            </div>
+          </div>
+          
+          <!-- Mobile Header -->
+          <div class="custom-banner__header-mobile mobile-only">
+            <button class="custom-banner__menu-toggle" aria-label="Toggle menu">
+              <span class="hamburger-icon">{% render 'icon-hamburger-menu' %}</span>
+              <span class="close-icon" style="display: none;">{% render 'icon-close-menu' %}</span>
+            </button>
+            
+            {%- if block.settings.logo != blank -%}
+              <img src="{{ block.settings.logo | image_url: width: 150 }}" alt="{{ block.settings.logo.alt | default: 'Logo' }}" class="custom-banner__logo">
+            {%- else -%}
+              <span class="custom-banner__logo-text">{{ block.settings.logo_text | default: 'LOGO' }}</span>
+            {%- endif -%}
+            
+            <div class="custom-banner__mobile-menu">
+              <div class="custom-banner__mobile-menu-content">
+                {%- if block.settings.tagline != blank -%}
+                  <p class="custom-banner__tagline">{{ block.settings.tagline }}</p>
+                {%- endif -%}
+                {%- if block.settings.button_link != blank and block.settings.button_text != blank -%}
+                  <a href="{{ block.settings.button_link }}" class="button custom-banner__header-button" style="background-color: {{ block.settings.button_bg_color }}; color: {{ block.settings.button_text_color }};">
+                    <span>{{ block.settings.button_text }}</span>
+                    {% render 'icon-arrow-right' %}
+                  </a>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        </div>
+
+      {%- when 'banner_image' -%}
+        <!-- Banner Image Block -->
+        <div class="custom-banner__image desktop-only" {{ block.shopify_attributes }}>
+          <img src="{{ block.settings.image | image_url: width: 2920 }}" alt="{{ block.settings.image.alt }}" width="100%" height="100%">
+        </div>
+      
+      {%- when 'image_with_text' -%}
+        <!-- Image with Text Block -->
+        <!-- Desktop Layout -->
+        <div class="custom-banner__image--with-text-wrapper desktop-only" {{ block.shopify_attributes }}>
+          <div class="custom-banner__image--with-text">
+            {%- if block.settings.heading != blank -%}
+              <h2>{{ block.settings.heading }}</h2>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p>{{ block.settings.text }}</p>
+            {%- endif -%}
+            {%- if block.settings.button_link != blank and block.settings.button_text != blank -%}
+              <a href="{{ block.settings.button_link }}" class="button button--primary custom-banner__image--with-text__button">
+                <span>{{ block.settings.button_text }}</span>
+                {% render 'icon-arrow-right' %}
+              </a>
+            {%- endif -%}
+          </div>
+          <div class="custom-banner__image">
+            <img src="{{ block.settings.image | image_url: width: 2920 }}" alt="{{ block.settings.image.alt }}" width="100%" height="100%">
+          </div>
+        </div>
+        
+        <!-- Mobile Layout -->
+        <div class="custom-banner__image--with-text-mobile-wrapper mobile-only">
+          <div class="custom-banner__image--with-text">
+            {%- if block.settings.heading != blank -%}
+              <h2>{{ block.settings.heading }}</h2>
+            {%- endif -%}
+            {%- if block.settings.mobile_text != blank -%}
+              <p>{{ block.settings.mobile_text }}</p>
+            {%- else -%}
+              <p>{{ block.settings.text }}</p>
+            {%- endif -%}
+          </div>
+          <div class="custom-banner__image">
+            <img src="{{ block.settings.mobile_image | default: block.settings.image | image_url: width: 2920 }}" alt="{{ block.settings.mobile_image.alt | default: block.settings.image.alt }}" width="100%" height="100%">
+            {%- if block.settings.button_link != blank and block.settings.button_text != blank -%}
+              <a href="{{ block.settings.button_link }}" class="button button--primary custom-banner__image--with-text__button">
+                <span>{{ block.settings.button_text }}</span>
+                {% render 'icon-arrow-right' %}
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+
+      {%- when 'tagline' -%}
+        <!-- Tagline Block -->
+        <div class="custom-banner__tagline-wrapper" style="background-color: {{ block.settings.background_color }};" {{ block.shopify_attributes }}>
+          <p class="custom-banner__tagline desktop-only">{{ block.settings.tagline_desktop }}</p>
+          <p class="custom-banner__tagline mobile-only">{{ block.settings.tagline_mobile }}</p>
+        </div>
+        
+    {%- endcase -%}
+  {%- endfor -%}
+</div>
+
+<script src="{{ 'custom-banner.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Custom Banner",
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "header",
+      "name": "Header",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Logo Settings"
+        },
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo Image"
+        },
+        {
+          "type": "text",
+          "id": "logo_text",
+          "label": "Logo Text (if no image)",
+          "default": "TISSO VISON"
+        },
+        {
+          "type": "header",
+          "content": "Content Settings"
+        },
+        {
+          "type": "text",
+          "id": "tagline",
+          "label": "Tagline",
+          "default": "Find the ideal gift for your loved ones."
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "CHOOSE GIFT"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "header",
+          "content": "Button Colors"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background Color",
+          "default": "#F5F5F5"
+        },
+        {
+          "type": "color",
+          "id": "button_bg_color",
+          "label": "Button Background Color",
+          "default": "#F5F542"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Button Text Color",
+          "default": "#000000"
+        }
+      ]
+    },
+    {
+      "type": "banner_image",
+      "name": "Banner Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "image_with_text",
+      "name": "Image with Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "The Gift Guide"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text (Desktop)",
+          "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season."
+        },
+        {
+          "type": "textarea",
+          "id": "mobile_text",
+          "label": "Text (Mobile - Optional)",
+          "info": "Leave blank to use desktop text"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Desktop Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile Image (Optional)",
+          "info": "Leave blank to use desktop image"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    },
+    {
+      "type": "tagline",
+      "name": "Tagline",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tagline_desktop",
+          "label": "Tagline (Desktop)",
+          "default": "Find the ideal gift for your loved ones."
+        },
+        {
+          "type": "text",
+          "id": "tagline_mobile",
+          "label": "Tagline (Mobile)",
+          "default": "Find the ideal gift for your loved ones."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background Color",
+          "default": "#F5F5F5"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Banner",
+      "blocks": [
+        {
+          "type": "header"
+        },
+        {
+          "type": "banner_image"
+        },
+        {
+          "type": "image_with_text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

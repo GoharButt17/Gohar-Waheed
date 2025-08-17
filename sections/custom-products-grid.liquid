@@ -1,0 +1,133 @@
+{% comment %}
+  Custom Products Grid Section
+  Displays a grid of selectable products with modal functionality
+{% endcomment %}
+
+{{ 'custom-products-grid.css' | asset_url | stylesheet_tag }}
+
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<!-- Products Grid Section -->
+<div class="custom-products-grid color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">
+  <div class="page-width">
+    {%- unless section.settings.title == blank -%}
+      <div class="custom-products-grid__title-wrapper">
+        <h2 class="custom-products-grid__title">{{ section.settings.title }}</h2>
+      </div>
+    {%- endunless -%}
+    
+    <div class="custom-products-grid__container">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.product != blank -%}
+          {%- assign product = block.settings.product -%}
+          <div class="custom-products-grid__item" {{ block.shopify_attributes }}>
+            <div class="custom-products-grid__card">
+              <button class="custom-products-grid__image-wrapper custom-products-grid__image-btn" 
+                      data-product-id="{{ product.id }}"
+                      data-product-handle="{{ product.handle }}"
+                      aria-label="View {{ product.title }}">
+                <img src="{{ product.featured_media | image_url: width: 1024 }}" 
+                     alt="{{ product.featured_media.alt | escape }}"
+                     class="custom-products-grid__image"
+                     loading="lazy"
+                     width="400"
+                     height="{{ 400 | divided_by: product.featured_media.aspect_ratio | ceil }}">
+              </button>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<!-- Product Modal -->
+<div class="custom-product-modal" id="customProductModal" style="display: none !important;">
+  <div class="custom-product-modal__backdrop"></div>
+  <div class="custom-product-modal__content">
+    <button class="custom-product-modal__close" id="modalClose">
+      {% render 'icon-close-menu' %}
+    </button>
+    
+    <div class="custom-product-modal__body" id="modalBody">
+      <!-- Content will be loaded here -->
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'custom-products-grid.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Custom Products Grid",
+  "class": "section",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "Tisso vison in the wild",
+      "label": "Section Title"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Products Grid",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ],
+  "max_blocks": 6
+}
+{% endschema %}
